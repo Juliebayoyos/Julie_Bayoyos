@@ -1,0 +1,932 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Julie A. Bayoyos | Portfolio</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS (Animate On Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#6366f1' },
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    /* small helper for focus outlines */
+    .focus-ring:focus { outline: 3px solid rgba(99,102,241,0.25); outline-offset: 3px; }
+  </style>
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  .skill-card {
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0.6rem;        /* smaller padding */
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;            /* tighter gap */
+    font-size: 0.8rem;      /* smaller font */
+    font-weight: 500;
+    color: #0f172a;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  }
+
+  .dark .skill-card {
+    background: rgba(31,41,55,0.55);
+    color: #f9fafb;
+  }
+
+  .skill-card:hover {
+    transform: scale(1.06);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  }
+
+  .skill-card i {
+    font-size: 1.4rem;       /* smaller icon */
+    transition: transform 0.3s ease;
+  }
+
+  .skill-card:hover i {
+    transform: scale(1.15);
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<!-- Updated: default (light) classes first, dark:... overrides -->
+<body class="bg-white text-slate-900 font-sans antialiased dark:bg-gray-900 dark:text-gray-100">
+
+<!-- DARK/LIGHT MODE + MOBILE NAV SCRIPT -->
+<script>
+(function() {
+  const root = document.documentElement;
+  const KEY = 'theme';
+  const stored = localStorage.getItem(KEY);
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initial = stored === 'dark' || stored === 'light' ? stored : (prefersDark ? 'dark' : 'light');
+
+  function apply(theme) {
+    if (theme === 'dark') root.classList.add('dark'); else root.classList.remove('dark');
+    const btn = document.querySelector('[data-theme-toggle]');
+    if (btn) btn.setAttribute('aria-pressed', theme === 'dark');
+    // update icon (if present)
+    const icon = document.querySelector('[data-theme-toggle] i');
+    if(icon){
+      icon.className = theme === 'dark' ? 'fa-solid fa-moon text-gray-200' : 'fa-regular fa-sun text-yellow-400';
+    }
+  }
+  window.toggleDarkMode = function() {
+    const next = root.classList.contains('dark') ? 'light' : 'dark';
+    apply(next);
+    localStorage.setItem(KEY, next);
+  };
+  apply(initial);
+
+  // mobile nav toggle
+  window.toggleMobileNav = function() {
+    const panel = document.getElementById('mobile-nav');
+    if (!panel) return;
+    const open = panel.getAttribute('data-open') === 'true';
+    panel.setAttribute('data-open', !open);
+    panel.classList.toggle('hidden');
+  };
+
+  // close mobile nav on outside click for small screens
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#mobile-nav') && !e.target.closest('[data-mobile-toggle]')) {
+      const panel = document.getElementById('mobile-nav');
+      if (panel && panel.getAttribute('data-open') === 'true') {
+        panel.setAttribute('data-open', 'false');
+        panel.classList.add('hidden');
+      }
+    }
+  });
+})();
+
+
+
+
+</script>
+
+<!-- NAVBAR -->
+<header class="fixed inset-x-0 top-4 z-50 px-4">
+  <div class="mx-auto max-w-6xl bg-white/60 dark:bg-gray-800/70 backdrop-blur rounded-2xl border border-slate-200/10 dark:border-white/10 shadow-lg">
+    <div class="flex items-center justify-between gap-4 px-5 py-3">
+      <div class="flex items-center gap-3">
+        <a href="#home" class="text-lg font-semibold tracking-tight">Julie A. Bayoyos</a>
+      </div>
+
+      <!-- desktop nav -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#about" class="hover:text-primary focus-ring px-2 py-1 rounded">About</a>
+        <a href="#skills" class="hover:text-primary focus-ring px-2 py-1 rounded">Skills</a>
+        <a href="#projects" class="hover:text-primary focus-ring px-2 py-1 rounded">Projects</a>
+        <a href="#experience" class="hover:text-primary focus-ring px-2 py-1 rounded">Experience</a>
+        <a href="#contact" class="hover:text-primary focus-ring px-2 py-1 rounded">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button data-theme-toggle onclick="toggleDarkMode()" aria-label="Toggle theme" class="focus-ring w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700/60 flex items-center justify-center hover:scale-105 transition">
+          <i class="fa-regular fa-sun text-yellow-400"></i>
+        </button>
+
+        <!-- mobile menu button -->
+        <button data-mobile-toggle class="md:hidden focus-ring w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700/60 flex items-center justify-center" aria-label="Open menu" onclick="toggleMobileNav()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+       
+      </div>
+    </div>
+
+    <!-- mobile nav panel -->
+    <div id="mobile-nav" class="md:hidden hidden border-t border-slate-200/5 dark:border-white/5 px-5 py-4" data-open="false" aria-hidden="true">
+      <nav class="flex flex-col gap-3">
+        <a href="#about" class="block px-3 py-2 rounded hover:bg-slate-100/60 dark:hover:bg-gray-700/40">About</a>
+        <a href="#skills" class="block px-3 py-2 rounded hover:bg-slate-100/60 dark:hover:bg-gray-700/40">Skills</a>
+        <a href="#projects" class="block px-3 py-2 rounded hover:bg-slate-100/60 dark:hover:bg-gray-700/40">Projects</a>
+        <a href="#experience" class="block px-3 py-2 rounded hover:bg-slate-100/60 dark:hover:bg-gray-700/40">Experience</a>
+        <a href="#contact" class="block px-3 py-2 rounded hover:bg-slate-100/60 dark:hover:bg-gray-700/40">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="home" class="pt-28">
+<!-- HERO -->
+<section class="relative min-h-[70vh] flex items-center">
+  <div class="mx-auto max-w-6xl w-full px-6 py-16">
+    <div class="grid md:grid-cols-2 gap-8 items-center bg-slate-50 dark:bg-gray-800/40 backdrop-blur rounded-3xl border border-slate-200/8 dark:border-white/8 p-8">
+
+      <!-- LEFT CONTENT -->
+      <div class="space-y-6">
+        <h1 class="text-4xl md:text-5xl font-bold">
+          Hi, I’m <span class="text-primary">Julie Bayoyos</span>
+        </h1>
+
+        <p class="text-lg text-slate-600 dark:text-gray-300">
+          4th-year BS Information Technology student • Full-Stack Web Developer
+        </p>
+
+        <div class="flex flex-wrap gap-3">
+          <a
+            href="#projects"
+            class="inline-flex items-center gap-2 px-5 py-3 bg-primary text-white rounded-full shadow"
+          >
+            View Projects
+          </a>
+
+          <a
+            href="#contact"
+            class="inline-flex items-center gap-2 px-5 py-3 border border-slate-200/10 rounded-full hover:bg-slate-100 hover:text-primary transition dark:hover:bg-gray-700"
+          >
+            Contact Me
+          </a>
+
+          <a
+            href="https://drive.google.com/uc?export=download&id=1nwU6-IlxQ8EK822YT0BfE7rS23hQRK3z"
+            download
+            class="group inline-flex items-center gap-3 px-5 py-3
+                   bg-gray-100/80 dark:bg-gray-700/60
+                   rounded-full border border-gray-300/30 dark:border-white/10
+                   hover:bg-primary hover:text-white
+                   transition-all duration-300"
+          >
+            <!-- Icon -->
+            <i class="fa-solid fa-file-pdf text-red-500 group-hover:text-white transition"></i>
+
+            <!-- Text -->
+            <span class="font-medium">Download Resume</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="flex justify-center md:justify-end">
+        <div class="relative">
+          <div class="rounded-full bg-gradient-to-tr from-pink-600 to-indigo-600 blur-xl w-64 h-64 absolute -inset-6 opacity-40"></div>
+
+          <img
+            src="1.jpeg"
+            alt="Julie Bayoyos portrait"
+            class="relative w-56 h-56 md:w-64 md:h-64 rounded-full object-cover border-4 border-slate-200/20 dark:border-white/10 shadow-lg"
+          >
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- ABOUT -->
+  <section id="about" class="py-20">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-3xl font-bold mb-4">About Me</h2>
+          <p class="text-slate-700 dark:text-gray-300 mb-4">I am a 4th-year BSIT student at Northwestern Mindanao State College of Science and Technology. I build accessible, maintainable web applications and have experience in capstone and freelance projects.</p>
+          <p class="text-slate-700 dark:text-gray-300">I developed a Pharmacy POS & Inventory System (capstone) and have participated in CTF events including Hack4Gov 2025.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="px-3 py-1 rounded bg-slate-100 dark:bg-gray-800/60">Web Development</span>
+            <span class="px-3 py-1 rounded bg-slate-100 dark:bg-gray-800/60">Cybersecurity Basics</span>
+            <span class="px-3 py-1 rounded bg-slate-100 dark:bg-gray-800/60">System Development</span>
+          </div>
+        </div>
+
+        <aside class="bg-white/60 dark:bg-gray-800/50 p-6 rounded-2xl border border-slate-200/6 dark:border-white/6">
+          <h3 class="font-semibold mb-3">Quick Facts</h3>
+          <ul class="space-y-2 text-slate-700 dark:text-gray-300">
+            <li class="flex items-center gap-3"><i class="fa-solid fa-graduation-cap text-primary"></i> BSIT Student</li>
+            <li class="flex items-center gap-3"><i class="fa-solid fa-laptop-code text-primary"></i> Full-Stack Web Developer</li>
+            <li class="flex items-center gap-3"><i class="fa-solid fa-trophy text-primary"></i> Hack4Gov 2025 Participant</li>
+            <li class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-primary"></i> Tangub City, Misamis Occidental</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="py-12 bg-gray-50 dark:bg-gray-900">
+  <div class="mx-auto max-w-5xl px-6 text-center">
+
+    <!-- Section Title -->
+    <h3 class="text-2xl sm:text-3xl font-bold mb-8 text-slate-900 dark:text-gray-100">
+      Skills & Expertise
+    </h3>
+
+    <!-- Development Skills -->
+    <h4 class="text-lg font-semibold mb-4 text-slate-800 dark:text-gray-200">
+      Development
+    </h4>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 justify-items-center">
+      <div class="skill-card"><i class="fa-brands fa-html5 text-orange-500"></i><span>HTML</span></div>
+      <div class="skill-card"><i class="fa-brands fa-css3-alt text-blue-500"></i><span>CSS</span></div>
+      <div class="skill-card"><i class="fa-brands fa-js text-yellow-400"></i><span>JavaScript</span></div>
+      <div class="skill-card"><i class="fa-brands fa-java text-red-500"></i><span>Java</span></div>
+      <div class="skill-card"><i class="fa-brands fa-php text-indigo-500"></i><span>PHP</span></div>
+      <div class="skill-card"><i class="fa-brands fa-python text-green-500"></i><span>Python</span></div>
+      <div class="skill-card"><i class="fa-brands fa-node-js text-green-600"></i><span>Node.js</span></div>
+      <div class="skill-card"><i class="fa-brands fa-react text-cyan-400"></i><span>React Native</span></div>
+    </div>
+
+    <!-- Frameworks & Databases -->
+    <h4 class="text-lg font-semibold mt-8 mb-4 text-slate-800 dark:text-gray-200">
+      Frameworks, Databases & Tools
+    </h4>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 justify-items-center">
+      <div class="skill-card"><i class="fa-solid fa-wind text-sky-400"></i><span>Tailwind</span></div>
+      <div class="skill-card"><i class="fa-brands fa-bootstrap text-purple-500"></i><span>Bootstrap</span></div>
+      <div class="skill-card"><i class="fa-solid fa-database text-blue-500"></i><span>MySQL</span></div>
+      <div class="skill-card"><i class="fa-solid fa-database text-gray-400"></i><span>SQLite</span></div>
+      <div class="skill-card"><i class="fa-solid fa-server text-orange-400"></i><span>XAMPP</span></div>
+      <div class="skill-card"><i class="fa-brands fa-git-alt text-red-500"></i><span>Git</span></div>
+    </div>
+
+    <!-- Design & Media -->
+    <h4 class="text-lg font-semibold mt-8 mb-4 text-slate-800 dark:text-gray-200">
+      Design & Media
+    </h4>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 justify-items-center">
+      <div class="skill-card"><i class="fa-solid fa-pen-nib text-pink-500"></i><span>UI Design</span></div>
+      <div class="skill-card"><i class="fa-solid fa-user-check text-indigo-400"></i><span>UX Design</span></div>
+      <div class="skill-card"><i class="fa-solid fa-camera text-gray-600"></i><span>Photography</span></div>
+      <div class="skill-card"><i class="fa-solid fa-video text-red-400"></i><span>Video Editing</span></div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+  <section id="projects" class="py-16 bg-white dark:bg-transparent">
+    <div class="mx-auto max-w-6xl px-6">
+      <h3 class="text-2xl font-bold mb-6 text-slate-900 dark:text-gray-100">Featured Projects</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+<!-- ================= PROJECT 1 ================= -->
+<article
+    class="group bg-white/70 dark:bg-gray-800/50 backdrop-blur-xl
+    p-6 rounded-2xl border border-slate-200/10 dark:border-white/10
+    shadow-sm hover:shadow-2xl hover:-translate-y-1
+    transition-all duration-300">
+
+    <!-- Media -->
+    <div class="relative">
+
+        <div id="mediaGrid"
+            class="grid grid-cols-3 gap-2 mb-3 overflow-hidden
+            transition-all duration-500 max-h-[8.5rem] opacity-100"
+            data-collapsed="8.5rem">
+
+            <!-- VIDEO -->
+            <video
+                class="h-28 w-full object-cover rounded-xl border border-white/10 shadow-md"
+                muted loop playsinline
+                onmouseenter="this.play()"
+                onmouseleave="this.pause()"
+                controls>
+                <source src="vd1.mp4" type="video/mp4">
+            </video>
+
+            <!-- IMAGES -->
+            <img src="2.jpeg" onclick="openGallery(this.src)" alt="project image"
+                class="h-28 w-full rounded-xl object-cover cursor-pointer
+                hover:scale-105 transition">
+
+            <img src="3.jpeg" onclick="openGallery(this.src)" alt="project image"
+                class="h-28 w-full rounded-xl object-cover cursor-pointer
+                hover:scale-105 transition">
+
+            <img src="4.jpeg" onclick="openGallery(this.src)" alt="project image"
+                class="h-28 w-full rounded-xl object-cover cursor-pointer
+                hover:scale-105 transition">
+
+                 <img src="5.jpeg" onclick="openGallery(this.src)" alt="project image"
+                class="h-28 w-full rounded-xl object-cover cursor-pointer
+                hover:scale-105 transition">
+        </div>
+
+        <!-- Show More -->
+        <button id="toggleBtn"
+            onclick="toggleMedia('mediaGrid','toggleBtn')"
+            class="mx-auto block text-sm font-medium text-primary hover:underline">
+            Show more
+        </button>
+    </div>
+
+    <!-- Content -->
+    <h4 class="text-xl font-semibold mt-4 mb-2 text-slate-900 dark:text-gray-100">
+        OCT Pharmacy POS System
+    </h4>
+
+    <p class="text-slate-700 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+        POS and Inventory Management System with barcode scanning,
+        sales analytics, and thermal receipt printing designed for
+        real pharmacy workflows.
+    </p>
+
+    <!-- Tech Stack -->
+    <div class="flex flex-wrap gap-2 mb-5">
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">PHP</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">MySQL</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">JavaScript</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">Bootstrap</span>
+    </div>
+
+   <!-- Footer -->
+<div class="flex flex-wrap items-center justify-between gap-3">
+    <span class="text-primary text-sm font-medium">
+        Capstone Project • 2025
+    </span>
+
+    <div class="flex gap-3">
+        <!-- Documentation -->
+        <a href="https://docs.google.com/document/d/1Lfk_gk9EmcRR455oAgeyAmchp6cQf4C7/edit?usp=drivesdk&ouid=101894812383575491450&rtpof=true&sd=true"
+           target="_blank"
+           class="inline-flex items-center gap-2 px-4 py-2 text-sm
+           border border-primary text-primary rounded-full
+           hover:bg-primary hover:text-white transition">
+            <i class="fa-solid fa-file-lines"></i> Docs
+        </a>
+
+        <!-- Live Demo -->
+        <a href="https://trochanteral-nenita-unturbulently.ngrok-free.dev/pharmacy/auth/login.php"
+           target="_blank"
+           class="inline-flex items-center gap-2 px-5 py-2 text-sm
+           bg-primary text-white rounded-full
+           hover:scale-105 hover:shadow-lg transition">
+            <i class="fa-solid fa-link"></i> Live Demo
+        </a>
+    </div>
+</article>
+
+<!-- ================= PROJECT : ABACIAL WEB SYSTEM ================= -->
+<article
+    class="group bg-white/70 dark:bg-gray-800/50 backdrop-blur-xl
+    p-6 rounded-2xl border border-slate-200/10 dark:border-white/10
+    shadow-sm hover:shadow-2xl hover:-translate-y-1
+    transition-all duration-300">
+
+    <!-- Video Preview (Drive-safe) -->
+    <div class="relative mb-5 h-44 rounded-2xl overflow-hidden
+        border border-white/10 shadow-md
+        bg-gradient-to-br from-gray-900 to-black
+        flex items-center justify-center">
+
+        <!-- Play Button -->
+        <a href="https://drive.google.com/file/d/1zCI71AqnLXmFGH2Bn4jESyjCRGNdHmHo/view"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="flex flex-col items-center gap-3 group">
+
+            <div class="w-16 h-16 rounded-full bg-primary
+                flex items-center justify-center
+                shadow-lg group-hover:scale-110 transition">
+                <i class="fa-solid fa-play text-white text-xl"></i>
+            </div>
+
+            <span class="text-xs text-white/80 tracking-wide">
+                Watch Project Demo
+            </span>
+        </a>
+    </div>
+
+    <!-- Title -->
+    <h4 class="text-xl font-semibold mb-2 text-slate-900 dark:text-gray-100">
+        Freelance projects ,web dev and video edit
+    </h4>
+
+    <!-- Description -->
+    <p class="text-slate-700 dark:text-gray-300 mb-5 text-sm leading-relaxed">
+        A fully deployed web-based system built with Python and Flask,
+        hosted on PythonAnywhere. Designed with real-world workflows,
+        clean UI, and production-ready deployment.
+    </p>
+
+    <!-- Tech Stack -->
+    <div class="flex flex-wrap gap-2 mb-6">
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">Python</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">Flask</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">HTML</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">CSS</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">PythonAnywhere</span>
+    </div>
+
+  <!-- Footer -->
+<div class="flex flex-wrap items-center justify-between gap-3">
+    <span class="text-primary text-sm font-medium">
+        Project • 2024
+    </span>
+
+    <a href="https://abacial.pythonanywhere.com"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="group inline-flex items-center gap-2 px-5 py-2 text-sm
+       bg-primary text-white rounded-full
+       hover:scale-105 hover:shadow-lg transition">
+
+        <i class="fa-solid fa-globe"></i>
+
+        <span class="font-medium">
+            Click here
+        </span>
+
+        <span class="text-white/80 group-hover:text-white transition">
+            to live website
+        </span>
+    </a>
+</div>
+
+</article>
+
+
+
+<!-- ============ IMAGE MODAL (SINGLE INSTANCE) ============ -->
+<div id="galleryModal"
+    class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center z-50
+                 transition-opacity duration-300 opacity-0"
+    aria-hidden="true" role="dialog" aria-modal="true">
+
+    <button onclick="closeGallery()"
+        class="absolute top-6 right-6 text-white text-4xl hover:scale-110 transition" aria-label="Close">
+        &times;
+    </button>
+
+    <img id="galleryImage"
+        class="max-w-[90%] max-h-[85%] rounded-2xl shadow-2xl border border-white/20 object-contain block mx-auto"
+        alt="Expanded image"
+        onclick="event.stopPropagation()">
+</div>
+
+<!-- ============ SCRIPT ============ -->
+<script>
+/**
+ * Unified toggleMedia: works for any grid/button and reads optional
+ * data-collapsed attribute on the grid (e.g. data-collapsed="6rem").
+ * Usage: toggleMedia('mediaGrid','toggleBtn') or toggleMedia('expMedia1','expBtn1')
+ */
+function toggleMedia(gridId, btnId) {
+    const grid = document.getElementById(gridId);
+    const btn = document.getElementById(btnId);
+    if (!grid) return;
+    const collapsed = grid.getAttribute('data-collapsed') || '8.5rem';
+    const isExpanded = grid.style.maxHeight && grid.style.maxHeight !== collapsed;
+
+    if (isExpanded) {
+        grid.style.maxHeight = collapsed;
+        if (btn) btn.textContent = 'Show more';
+    } else {
+        grid.style.maxHeight = grid.scrollHeight + 'px';
+        if (btn) btn.textContent = 'Show less';
+    }
+}
+
+// Open gallery modal (centers image via flex + object-contain)
+function openGallery(src) {
+    const modal = document.getElementById('galleryModal');
+    const img = document.getElementById('galleryImage');
+    if (!modal || !img) return;
+    img.src = src;
+    modal.classList.remove('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+    // prevent background scroll
+    document.body.style.overflow = 'hidden';
+    // trigger opacity transition
+    setTimeout(() => {
+        modal.classList.add('opacity-100');
+        modal.classList.remove('opacity-0');
+    }, 10);
+}
+
+// Close gallery modal
+function closeGallery() {
+    const modal = document.getElementById('galleryModal');
+    if (!modal) return;
+    modal.classList.remove('opacity-100');
+    modal.classList.add('opacity-0');
+    modal.setAttribute('aria-hidden', 'true');
+    // restore scroll after transition
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+// Close modal on clicking outside the image
+const galleryModal = document.getElementById('galleryModal');
+if (galleryModal) {
+    galleryModal.addEventListener('click', function(e) {
+        if (e.target.id === 'galleryModal') {
+            closeGallery();
+        }
+    });
+}
+
+// Close modal on pressing Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeGallery();
+    }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- EXPERIENCE -->
+<section id="experience" class="py-16 bg-white dark:bg-gray-900">
+  <div class="mx-auto max-w-6xl px-6">
+    <h3 class="text-3xl font-bold mb-10 text-slate-900 dark:text-gray-100">Experience & Activities</h3>
+
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <!-- Experience Item 1 -->
+      <div class="p-6 rounded-2xl border-l-4 border-primary bg-slate-50 dark:bg-gray-800/40 shadow-sm hover:shadow-lg transition">
+        <h4 class="font-semibold text-xl text-slate-900 dark:text-gray-100 mb-2">CTF Participant – Hack4Gov 2025</h4>
+        <p class="text-slate-700 dark:text-gray-300 mb-4">Represented NMSCST and earned 570 points in cybersecurity challenges.</p>
+
+        <!-- Media Grid -->
+        <div id="expMedia1" class="grid grid-cols-3 gap-2 max-h-[6rem] overflow-hidden transition-all duration-500" data-collapsed="6rem">
+          <img src="ctf1.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ctf2.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ctf3.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ctf4.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ctf5.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ctf6.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ctf7.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ctf8.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ctf9.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+        </div>
+
+        <!-- Show More/Less -->
+        <button id="expBtn1" onclick="toggleMedia('expMedia1','expBtn1')"
+                class="mt-3 text-sm font-medium text-primary hover:underline">
+          Show more
+        </button>
+      </div>
+
+      <!-- Experience Item 2 -->
+      <div class="p-6 rounded-2xl border-l-4 border-primary bg-slate-50 dark:bg-gray-800/40 shadow-sm hover:shadow-lg transition">
+        <h4 class="font-semibold text-xl text-slate-900 dark:text-gray-100 mb-2">Assistant – LTMS Graduation Pictorial</h4>
+        <p class="text-slate-700 dark:text-gray-300 mb-4">Assisted in organizing and guiding students during graduation pictorials.</p>
+
+        <!-- Media Grid -->
+        <div id="expMedia2" class="grid grid-cols-3 gap-2 max-h-[6rem] overflow-hidden transition-all duration-500" data-collapsed="6rem">
+          <img src="ltms1.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ltms2.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ltms3.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+           <img src="ltms2.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+          <img src="ltms3.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition">
+        </div>
+
+        <!-- Show More/Less -->
+        <button id="expBtn2" onclick="toggleMedia('expMedia2','expBtn2')"
+                class="mt-3 text-sm font-medium text-primary hover:underline">
+          Show more
+        </button>
+      </div>
+
+<!-- Experience Item: Flash DELIVERY -->
+<div class="p-6 rounded-2xl border-l-4 border-primary bg-slate-50 dark:bg-gray-800/40 shadow-sm hover:shadow-lg transition">
+  <h4 class="font-semibold text-xl text-slate-900 dark:text-gray-100 mb-2">Flash Delivery</h4>
+  <p class="text-slate-700 dark:text-gray-300 mb-4">
+    Documenting fast and efficient delivery operations, highlighting real-time parcel handling, route management, 
+    and customer interactions. Showcasing experiences and insights gained from daily deliveries.
+  </p>
+
+  <!-- Media Grid -->
+  <div id="expMedia3" class="grid grid-cols-3 gap-2 max-h-[6rem] overflow-hidden transition-all duration-500" data-collapsed="6rem">
+    <img src="example1.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="Delivery photo 1">
+    <img src="example2.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="Delivery photo 2">
+    <img src="example3.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="Delivery photo 3">
+    <img src="example4.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="Delivery photo 4">
+  </div>
+
+  <!-- Show More/Less -->
+  <button id="expBtn3" onclick="toggleMedia('expMedia3','expBtn3')" 
+          class="mt-3 text-sm font-medium text-primary hover:underline">
+    Show more
+  </button>
+</div>
+
+<!-- Experience Item: iPhone Buy & Sell Vlog/Blog -->
+<div class="p-6 rounded-2xl border-l-4 border-primary bg-slate-50 dark:bg-gray-800/40 shadow-sm hover:shadow-lg transition">
+    <h4 class="font-semibold text-xl text-slate-900 dark:text-gray-100 mb-2">iPhone Buy & Sell Vlog</h4>
+    <p class="text-slate-700 dark:text-gray-300 mb-4">
+        Documenting the process of buying and selling iPhones, sharing tips, real-time transactions, 
+        and insights on pricing, condition checks, and negotiation strategies.
+    </p>
+
+    <!-- Media Grid -->
+    <div id="expMedia4" class="grid grid-cols-3 gap-2 max-h-[6rem] overflow-hidden transition-all duration-500" data-collapsed="6rem">
+        <img src="iphone1.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="iPhone transaction photo 1">
+        <img src="iphone2.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="iPhone transaction photo 2">
+        <img src="iphone3.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="iPhone transaction photo 3">
+        <img src="iphone4.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="iPhone transaction photo 4">
+        <img src="iphone5.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="iPhone transaction photo 5">
+        <img src="iphone6.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="iPhone transaction photo 6">
+        <img src="iphone7.jpeg" onclick="openGallery(this.src)" class="h-20 w-full rounded-lg object-cover cursor-pointer hover:scale-105 transition" alt="iPhone transaction photo 7">
+    </div>
+
+    <div class="mt-3 flex items-center gap-3">
+        <!-- Vlog Link -->
+        <a href="https://www.facebook.com/share/v/1BmP9RFQZJ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" 
+           class="inline-flex items-center gap-2 px-3 py-2 text-sm bg-primary text-white rounded-full hover:opacity-95 transition">
+            <i class="fa-brands fa-facebook"></i> Click Here to Watch Vlog
+        </a>
+
+        <!-- Show More/Less -->
+        <button id="expBtn4" onclick="toggleMedia('expMedia4','expBtn4')" 
+                class="ml-auto text-sm font-medium text-primary hover:underline">
+            Show more
+        </button>
+    </div>
+</div>  </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- CONTACT - Ultra Compact iOS Style (No Footer) -->
+<section id="contact" class="py-12 bg-gray-50 dark:bg-gray-900">
+  <div class="mx-auto max-w-2xl px-4">
+
+    <h3 class="text-2xl font-bold mb-3 text-slate-900 dark:text-gray-100 text-center">
+      Get In Touch
+    </h3>
+
+    <p class="text-center text-slate-500 dark:text-gray-300 mb-8 text-sm">
+      Open for collaboration, freelance projects, internships, mentoring, and tech inquiries.
+    </p>
+
+    <!-- Profile Card -->
+    <div class="bg-white/40 dark:bg-gray-800/40 backdrop-blur-lg rounded-2xl shadow-md p-4 mb-8 flex flex-col sm:flex-row items-center gap-3 border border-white/20 dark:border-gray-700 hover:shadow-lg hover:scale-[1.02] transition duration-200">
+      <img
+        src="1.jpeg"
+        alt="Julie A. Bayoyos"
+        class="w-20 h-20 rounded-full border-2 border-primary object-cover shadow-sm"
+      >
+
+      <div class="flex-1">
+        <h4 class="text-lg font-bold text-slate-900 dark:text-gray-100 mb-1">
+          Julie A. Bayoyos
+        </h4>
+
+        <p class="text-slate-700 dark:text-gray-300 text-xs mb-1">
+          BS IT, 4th Year | Full Stack Developer since 3rd Year
+        </p>
+
+        <div class="flex flex-wrap gap-2 text-slate-700 dark:text-gray-300 text-xs">
+          <span><strong>Age:</strong> 21</span>
+          <span><strong>Gender:</strong> Male</span>
+          <span><strong>Height:</strong> 5'7"</span>
+          <span><strong>Weight:</strong> 58kg</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compact Contact Cards -->
+    <div class="grid grid-cols-2 gap-3">
+
+      <!-- Email -->
+      <a
+        href="mailto:julie.bayoyos@nmsc.edu.ph?subject=Hello%20Julie"
+        class="p-3 rounded-xl bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/20 dark:border-gray-700 shadow hover:shadow-md transition flex flex-col items-center text-center hover:scale-[1.02] duration-200"
+      >
+        <i class="fa-solid fa-envelope text-xl text-primary mb-1"></i>
+        <p class="text-xs font-semibold text-slate-900 dark:text-gray-100 mb-0.5">Email</p>
+        <span class="text-[10px] text-slate-700 dark:text-gray-300">
+          julie.bayoyos@nmsc.edu.ph
+        </span>
+      </a>
+
+      <!-- Phone -->
+      <a
+        href="tel:+639052173378"
+        class="p-3 rounded-xl bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/20 dark:border-gray-700 shadow hover:shadow-md transition flex flex-col items-center text-center hover:scale-[1.02] duration-200"
+      >
+        <i class="fa-solid fa-phone text-xl text-primary mb-1"></i>
+        <p class="text-xs font-semibold text-slate-900 dark:text-gray-100 mb-0.5">Phone</p>
+        <span class="text-[10px] text-slate-700 dark:text-gray-300">
+          +63 905 217 3378
+        </span>
+      </a>
+
+      <!-- Location -->
+      <a
+        href="https://www.google.com/maps/search/?api=1&query=Tangub%20City%2C%20Misamis%20Occidental"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="p-3 rounded-xl bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/20 dark:border-gray-700 shadow hover:shadow-md transition flex flex-col items-center text-center hover:scale-[1.02] duration-200"
+      >
+        <i class="fa-solid fa-location-dot text-xl text-primary mb-1"></i>
+        <p class="text-xs font-semibold text-slate-900 dark:text-gray-100 mb-0.5">Location</p>
+        <span class="text-[10px] text-slate-700 dark:text-gray-300">
+          Tangub City, Misamis Occidental
+        </span>
+      </a>
+
+      <!-- Resume -->
+      <a
+        href="https://drive.google.com/uc?export=download&id=1nwU6-IlxQ8EK822YT0BfE7rS23hQRK3z"
+        download
+        class="p-3 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white shadow hover:shadow-md transition flex flex-col items-center text-center hover:scale-[1.02] duration-200"
+      >
+        <i class="fa-solid fa-file-arrow-down text-xl mb-1"></i>
+        <p class="text-xs font-semibold mb-0.5">Resume</p>
+        <span class="text-[10px]">Download</span>
+      </a>
+
+    </div>
+
+    <!-- Social Buttons -->
+    <div class="flex justify-center gap-3 mt-6">
+      <a href="https://www.facebook.com/share/1ReEJofh3o/?mibextid=wwXIfr" target="_blank" class="p-2 rounded-full bg-blue-600 text-white hover:scale-110 transition duration-200">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/julie_bayoyos?igsh=dzJ3OWRjcjF0Nmxu" target="_blank" class="p-2 rounded-full bg-pink-500 text-white hover:scale-110 transition duration-200">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/julie-bayoyos-263a34395" target="_blank" class="p-2 rounded-full bg-blue-700 text-white hover:scale-110 transition duration-200">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+      <a href="https://github.com/Juliebayoyos" target="_blank" class="p-2 rounded-full bg-gray-700 text-white hover:scale-110 transition duration-200">
+        <i class="fa-brands fa-github"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
