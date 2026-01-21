@@ -30,8 +30,6 @@ To run the project locally:
 2. Open the project folder
 3. Open `index.html` in any web browser
 
-## Screenshots
-(Optional: Add screenshots of the homepage and other sections)
 
 ## Author
 Julie A. Bayoyos
